@@ -1,0 +1,22 @@
+body{margin-left: 15%; margin-right: 15%; margin-top: 5%}
+a.newsblockzag{font-family: Arial, Helvetica, sans-serif; padding-left: 30px; font-size: 15px; padding-right: 20px; color: #344A70; margin-top: 15px; margin-bottom: 10px}
+div.fnews{ background-color: #dce4ef; padding: 5%; padding-top: 2%; margin-top: 2%; padding-bottom: 2%  }
+.fnews h1{font-family: Arial, Helvetica, sans-serif; font-size: 18px;}
+p{font-family: Times New Roman, Times, Serif; font-size: 15px; color: #000000; text-align: justify}
+p.link{font-family: Arial, Helvetica, sans-serif;font-size: 12px; padding-left: 15px; }
+img.img{margin-bottom: 2%; margin-left: 2%;}
+p.linkr{ text-align: right; font-family: Arial, Helvetica, sans-serif;font-size: 12px;}
+.datanews{color: #8B8B8B; margin:0px; margin-top: 20px; font-size: 12px; font-weight: normal}
+.zagnews{font-family: Arial, Helvetica, sans-serif; color: black; padding-top: 0px; margin-bottom: 0px; margin-top: 0px; font-size: 16px; text-transform: uppercase; font-weight: bold}
+.textnews{margin-top: 10px; text-indent: 20px; text-align: justify}
+.newsblockzag{font-family: Arial, Helvetica, sans-serif; padding-left: 30px; font-size: 15px; padding-right: 20px; color: #344A70; margin-top: 15px; margin-bottom: 5px}
+.newsblock{font-family: Arial, Helvetica, sans-serif; text-align: left;  padding-left: 30px; font-size: 12px; padding-right: 20px; color: #344A70; margin-top: 0px; margin-bottom: 5px}
+.anewsblock{color: #344A70}
+.img{margin-left: 20px}
+.namepage{font-size: 16px; color: #0E3E7F; text-transform: uppercase; font-family: Arial, Helvetica, sans-serif;}
+.zagblock{border-bottom-style: solid; border-width: 1px; border-color: #D1D1D1; 
+padding-left: 10px; margin-top: 10px;
+text-transform: uppercase; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2D6296; font-weight: bold; margin-bottom: 0px}
+table.tbl {margin: 0 auto;}
+table.tbl p{ font-family: Arial, Helvetica, sans-serif; font-size: 16px;}
+.error {color: #D8000C; background-color: #FFBABA;}
