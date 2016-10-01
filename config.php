@@ -1,10 +1,10 @@
 <?
 session_start();
 define("Main_url", 'http://kurs/');
-include '/libs/rb.php';
+include 'libs/rb.php';
 
 R::setup( 'mysql:host=localhost;dbname=worksolution', 'root', '' ); 
-
+R::freeze( false );
 
 
 

@@ -51,11 +51,13 @@ include "../forms/header.php";
             </div>
         </div>
 
-        <div class="row col-md-5">
+
             <button class="btn btn-success" size=70 type=submit name="enter">Войти</button>
-        </div>
+
 
     </form>
+
+    </div>
 <?php
 include "../forms/footer.php";
 ?>

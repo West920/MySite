@@ -60,12 +60,11 @@ include "../forms/header.php";
         </div>
     </div>
 
-    <div class="row col-md-2">
         <button class="btn btn-success" size=70 type=submit name="ok">Зарегистрироваться</button>
-    </div>
+
 
 </form>
-
+</div>
 <?php
 include "../forms/footer.php";
 ?>

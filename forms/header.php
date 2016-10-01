@@ -44,7 +44,8 @@
         </div>
         <div class="row">
             <div class="col-md-2 col-md-offset-2"><div class="border side-left">Сайд бар слева</div></div>
-            <div class="col-md-4  border">
+            <div class="col-md-4">
+                <div class="border">
 
                 <?
                 if (!empty($err)) echo "<div class='panel panel-danger'><div class='panel-heading'>".$err."</div></div>";

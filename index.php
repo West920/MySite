@@ -36,7 +36,7 @@ foreach($new as $news)
         <div class="new">
           <div class='text-info'>
             <div class="title">
-            <a href=news.php?id_news=<? echo $news['id_news']; ?>><? echo $news['name']; ?></a>
+              <a href=news.php?id_news=<? echo $news['id_news']; ?>><? echo $news['name']; ?></a>
             </div>
             <div class="datetime"><? echo $news['putdate_format']; ?></div>
           </div>
@@ -74,7 +74,7 @@ for($i=1; $i<=3; $i++)
 {
     if($page + $i <= $total) $pageright .= '<li><a href='.$_SERVER[PHP_SELF].'?page='. ($page + $i) .'>'. ($page + $i) .'</a></li>';
 }
-echo '<ul class="pagination">'.$pervpage.$pageleft.'<li><a href="#"><b>'.$page.'</b></a></li>'.$pageright.$nextpage."</ul>";
+echo '<ul class="pagination">'.$pervpage.$pageleft.'<li><a href="#"><b>'.$page.'</b></a></li>'.$pageright.$nextpage."</ul></div>";
 
 
 include "forms/footer.php";

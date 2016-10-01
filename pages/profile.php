@@ -17,11 +17,11 @@ if(isset($_POST["ok"]))
         if (!empty($_FILES['avatar']['tmp_name']))
         {
           /** Формируем путь к файлу */
-          $path = "files/".date("YmdHis",time());
+          $path = "files/".date("YmdHis",time().".jpg");
 
           /** Проверяем размеры загружаемого изображения */
           $infimg = getimagesize($_FILES['avatar']['tmp_name']);
-          if($infimg[0] > 100 or $infimg[1] > 300) links("Большой размер изображения. Не более 100x300");
+          if($infimg[0] > 100 or $infimg[1] > 100) $err = "Большой размер изображения. Не более 100x100";
 
           /** Перемещаем файл из временной директории сервера в
           * директорию /files Web-приложения */
@@ -70,7 +70,7 @@ $data = R::load('users', $_COOKIE['id']);
     <div class="form-group row">
             <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
             <label for="avatar">Аватар</label>
-            <input size=70 type=file id="avatar" name="avatar">
+            <input type=file id="avatar" name="avatar">
     </div>
 
     <button class="btn btn-success" size=70 type=submit name="ok">Сохранить</button>
@@ -83,6 +83,7 @@ $data = R::load('users', $_COOKIE['id']);
 </div>
 
 </form>
+</div>
 
 <?php
 include "../forms/footer.php";
