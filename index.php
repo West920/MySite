@@ -2,8 +2,7 @@
 include "config.php";
 include "forms/header.php";
 
-$cook = CheckCook();
-if (CheckCook()) echo "<div class='border-hi'>Здравствуйте, <span style='color:#1815a2'>".$cook['name']."</span></div>";
+
 
 if(!preg_match("|^[\d]*$|",$_GET['page'])) links("Îøèáêà ïðè îáðàùåíèè ê áëîêó íîâîñòåé");
 
@@ -28,7 +27,6 @@ $query = "SELECT id_news,
 $new = all($query);
 if (!$new) links("Îøèáêà ïðè îáðàùåíèè ê áëîêó íîâîñòåé");
 
-
 foreach($new as $news)
 {
         ?>
@@ -45,7 +43,7 @@ foreach($new as $news)
           if(trim($news['url_pict']) != "" && trim($news['url_pict']) != "-")
             ?>
 
-          <img class=img src=<? echo $news['url_pict']; ?> ><br>
+          <img class="img-responsive" src=<? echo $news['url_pict']; ?> ><br>
           <div class='text'><? echo nl2br($news['preview']); ?></div> 
         </div>
 

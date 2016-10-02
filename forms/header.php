@@ -13,7 +13,7 @@
     
 </head>
 <body>
-    <div class=" col-md-8 col-md-offset-2">
+    <div class=" col-md-10 col-md-offset-1">
         <div class="row">
             <nav role="navigation" class="navbar navbar-default">
                 <div class="container-fluid">
@@ -43,8 +43,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 col-md-offset-2"><div class="border side-left">Сайд бар слева</div></div>
-            <div class="col-md-4">
+            <div class="col-md-10 col-md-offset-1"><div class="pinfo">
+                <?
+                $cook = CheckCook();
+                if (CheckCook()) echo "Здравствуйте, <span style='color:#1815a2'>".$cook['name']."</span>";
+                ?>
+            </div></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1"><div class="border side-left">Сайд бар слева</div></div>
+            <div class="col-md-6">
                 <div class="border">
 
                 <?

@@ -1,5 +1,5 @@
 body {
-  background-color: #dad4ef;
+  background-color: #3e434e;
 }
 body a {
   color: #000;
@@ -9,7 +9,7 @@ body a {
   overflow: hidden;
   background-color: #fff;
   border-radius: 10px;
-  padding: 30px;
+  padding: 10px;
   border: 2px solid #dadada;
 }
 .border-hi {
@@ -19,7 +19,7 @@ body a {
 }
 .border-comment {
   margin-top: 20px;
-  padding: 40px;
+  padding: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 14px;
@@ -33,6 +33,7 @@ body a {
 }
 .new {
   margin-top: 15px;
+  margin-bottom: 30px;
   padding: 10px;
   border-top: 1px solid #dadada;
 }
@@ -47,7 +48,7 @@ body a {
 }
 .new .title {
   font-weight: bold;
-  font-size: 30px;
+  font-size: 35px;
 }
 .new .img {
   padding: 10px;
@@ -56,17 +57,46 @@ body a {
 .new .text {
   font-size: 18px;
 }
-#commname {
-  font-size: 16px;
-  color: #ada5a5;
-  padding: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+.comment {
+  margin: 10px;
+  float: left;
+}
+.comment-text {
+  margin: 20px;
+  margin-right: 30px;
+}
+figure {
+  display: table;
+  width: 1%;
+  padding: 0;
+  margin: 0px;
+  border: none;
+}
+figcaption {
+  display: block;
+  padding: 0px;
+  margin: 0;
+  border: none;
   text-align: center;
 }
-.nopad-left {
-  padding-left: 0 !important;
+figure img {
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: none;
 }
-.nopad-right {
-  padding-right: 0 !important;
+.pinfo {
+  background-color: #fff;
+  border-radius: 0px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #dadada;
+}
+.adminpanel {
+  position: absolute;
+  right: 30px ;
+}
+.adminpanel-comm {
+  position: absolute;
+  right: 30px ;
 }

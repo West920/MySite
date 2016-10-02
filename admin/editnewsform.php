@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
   // Устанавливаем соединение с базой данных
   include "../config.php";
@@ -22,7 +22,7 @@ if(isAdmin() == 0) links('Недоступный раздел');
   $name = $row['name'];
   $body = $row['body'];
   $url_pict = $row['url_pict'];
-  //$chk_filename = 'checked';
+  $preview = $row['preview'];
   $date_month = substr($row['putdate'],5,2);
   $date_day = substr($row['putdate'],8,2);
   $date_year = substr($row['putdate'],0,4);

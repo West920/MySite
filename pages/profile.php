@@ -12,36 +12,39 @@ if(isset($_POST["ok"]))
   if(empty($_POST['name'])) $err = "Отсутствует имя пользователя";
   elseif(empty($_POST['email'])) $err = "Отсутствует e-mail";
   else{
-
-        /** Загружаем аватар*/
-        if (!empty($_FILES['avatar']['tmp_name']))
+        
+        $foo = new Upload($_FILES['avatar']); 
+        if ($foo->uploaded) 
         {
-          /** Формируем путь к файлу */
-          $path = "files/".date("YmdHis",time().".jpg");
+          
+          /** Delete old image*/
+          $user = R::findOne('users', 'name = ?', [$_POST['name']]);
+          @unlink($user->avatar);
+          
+           $foo->file_new_name_body   = $user->name;
+           $foo->image_resize = true;
+           $foo->image_ratio = true;
+           $foo->image_ratio_fill  = true;
+           $foo->image_convert = jpg;
+           $foo->image_x = 100; 
+           $foo->image_y = 100; 
+           $foo->Process('../files/avatars');
 
-          /** Проверяем размеры загружаемого изображения */
-          $infimg = getimagesize($_FILES['avatar']['tmp_name']);
-          if($infimg[0] > 100 or $infimg[1] > 100) $err = "Большой размер изображения. Не более 100x100";
+           $path = str_replace('\\','/',$foo->file_dst_pathname);
 
-          /** Перемещаем файл из временной директории сервера в
-          * директорию /files Web-приложения */
-          if (copy($_FILES['avatar']['tmp_name'], "../".$path))
-          {
-            /** Уничтожаем файл во временной директории */
-            @unlink($_FILES['avatar']['tmp_name']);
-            /** Изменяем права доступа к файлу */
-            @chmod("../".$path, 0644);
-          }
+
+           $prfsave = R::load('users', $_COOKIE['id']);
+            $prfsave->name=$_POST['name'];
+            $prfsave->email=$_POST['email'];
+            if(!empty($_POST['pass'])) $prfsave->pass=md5(md5(trim($_POST['pass'])));
+            if($path!='') $prfsave->avatar=$path;
+            if(R::store($prfsave)) $scs = 'Изменения сохранены';
         }
 
-        $prfsave = R::load('users', $_COOKIE['id']);
-        $prfsave->name=$_POST['name'];
-        $prfsave->email=$_POST['email'];
-        if(!empty($_POST['pass'])) $prfsave->pass=md5(md5(trim($_POST['pass'])));
-        if($path!='') $prfsave->avatar=$path;
-        if(R::store($prfsave)) $scs = 'Изменения сохранены';
-      }
+        
+    }
 }
+
 include "../forms/header.php";
 $data = R::load('users', $_COOKIE['id']);
 ?>
@@ -68,7 +71,7 @@ $data = R::load('users', $_COOKIE['id']);
     </div>
 
     <div class="form-group row">
-            <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+            
             <label for="avatar">Аватар</label>
             <input type=file id="avatar" name="avatar">
     </div>

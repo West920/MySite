@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 if (function_exists('date_default_timezone_set')) date_default_timezone_set('Europe/Kaliningrad');;
 
@@ -18,6 +18,7 @@ if (function_exists('date_default_timezone_set')) date_default_timezone_set('Eur
     $chk_rename   = "";
     $name = "";
     $body = "";
+    $preview = "";
     $url = "";
     $url_text = "";
     $url_pict = "";
@@ -39,10 +40,16 @@ if (function_exists('date_default_timezone_set')) date_default_timezone_set('Eur
   <td><input class=input size=70 type=text name=name value='<?php echo htmlspecialchars($name); ?>' required></td>
 </tr>
 <tr>
+  <td><p class=zag2>Анонс</td>
+  <td></td>
+  <td><textarea class=input name=preview rows=5 cols=60 required><?php echo htmlspecialchars($preview); ?></textarea></td>
+</tr>
+<tr>
   <td><p class=zag2>Содержание</td>
   <td></td>
   <td><textarea class=input name=body rows=10 cols=60 required><?php echo htmlspecialchars($body); ?></textarea></td>
 </tr>
+
 <tr>
   <td><p class=zag2>Дата новости</td>
   <td></td>
@@ -127,7 +134,7 @@ if (function_exists('date_default_timezone_set')) date_default_timezone_set('Eur
   <td></td>
   <td><input class=button type=submit value=<?php echo htmlspecialchars($button); ?>></td>
 </tr>
-<input type=hidden name=id_news value=<?php echo htmlspecialchars($_GET['id_news']); ?>>
+<input type=hidden name=id_news value=<?php echo htmlspecialchars($_POST['id_news']); ?>>
 <input type=hidden name=start value=<?php echo htmlspecialchars($_GET['start']); ?>>
 </table>
 </form>

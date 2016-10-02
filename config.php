@@ -2,11 +2,10 @@
 session_start();
 define("Main_url", 'http://kurs/');
 include 'libs/rb.php';
+require_once 'libs/class.upload.php';
 
 R::setup( 'mysql:host=localhost;dbname=worksolution', 'root', '' ); 
 R::freeze( false );
-
-
 
   if (function_exists('date_default_timezone_set')) date_default_timezone_set('Europe/Kaliningrad');
 
@@ -20,6 +19,8 @@ R::freeze( false );
   /** Количество новостей, выводимых на странице */
   $all_number_news = 5;
 
+  $err ='';
+  $scs = '';
 
 /** Для подключения к БД используем PDO
  *  @return array[] $db одиночный результат запроса
@@ -114,6 +115,12 @@ function CheckCook()
     }
   }
 }
+
+/** Testing speed */
+require_once 'libs/Ubench.php';
+$bench = new Ubench;
+$bench->start();
+
 
 
 ?>

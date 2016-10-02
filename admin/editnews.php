@@ -27,13 +27,9 @@
   * загружает другое - удаляем старое изображение */
   if($_POST['chk_delete'] == "on" || $_POST['chk_filename'] == "on")
   {
-    $query = "SELECT * FROM news WHERE id_news = $_POST[id_news]";
-    $row = one($query);
-    if(!$row) links("Ошибка при редактировании блока \"Новости\"");
-    if(!empty($row['url_pict']))
-    {
-      if(file_exists("../".$row['url_pict'])) @unlink("../".$row['url_pict']);
-    }
+    /** Delete old image*/
+    $news = R::findOne('news', 'id_news = ?', [$_POST['id_news']]);
+    @unlink($news->url_pict);
     $path_image = "url_pict = '',";
   }
 
@@ -41,56 +37,21 @@
   $path = "";
   if($_POST['chk_filename'] == "on")
   {
-    if (!empty($_FILES['filename']['tmp_name']))
-    {
-      /** Формируем путь к файлу    */
-      $path = "files/".date("YmdHis",time());
-      /** Если оператор пожелал переименовать файл - переименовываем  */
-      if($_POST['chk_rename'] == "on")
-      {
-        /** Проверяем, чтобы не было прямых и обратных слешей */
-        $_POST['rename'] = str_replace("\\","",$_POST['rename']);
-        $_POST['rename'] = str_replace("/","",$_POST['rename']);
-        $_POST['rename'] = stripcslashes($_POST['rename']);
-        $path = "files/".substr($_POST['rename'], 0, strrpos($_POST['rename'], ".")); 
-      }
-        /** Проверяем размеры изображения */
-        $infimg = getimagesize($_FILES['filename']['tmp_name']);
-        if($infimg[0] > 300 or $infimg[1] > 300) links("Большой размер изображения");
-      
-      /** Проверяем, не является ли файл скриптом PHP или Perl, html, если это так преобразуем его в формат .txt */
-      $extentions = array("#\.php#is",
-                          "#\.phtml#is",
-                          "#\.php3#is",
-                          "#\.html#is",
-                          "#\.htm#is",
-                          "#\.hta#is",
-                          "#\.pl#is",
-                          "#\.xml#is",
-                          "#\.inc#is",
-                          "#\.shtml#is", 
-                          "#\.xht#is", 
-                          "#\.xhtml#is");
-      /** Извлекаем из имени файла расширение */
-      $ext = strrchr($_FILES['filename']['name'], "."); 
-      $add = $ext;
-      foreach($extentions AS $exten) 
-      {
-        if(preg_match($exten, $ext)) $add = ".txt"; 
-      }
-      $path .= $add; 
-  
-      /** Перемещаем файл из временной директории сервера в
-      * директорию /files Web-приложения */
-      if (copy($_FILES['filename']['tmp_name'], "../".$path))
-      {
-        /** Уничтожаем файл во временной директории */
-        unlink($_FILES['filename']['tmp_name']);
-        /** Изменяем права доступа к файлу */
-        chmod("../".$path, 0644);
-      }
-    }
-    else links("Не указан файл для загрузки");
+
+      $foo = new Upload($_FILES['filename']); 
+        if ($foo->uploaded) 
+        {
+           $foo->file_new_name_body = '2news';
+           $foo->image_resize = true;
+           $foo->image_ratio = true;
+           $foo->image_ratio_y  = true;
+           $foo->image_convert = jpg;
+           $foo->image_background_color = "#FFFFFF"; 
+           $foo->image_x = 900; 
+           $foo->Process('../files/');
+           $path = str_replace('\\','/',$foo->file_dst_pathname);
+        }
+
     if(!empty($path)) $path_image = "url_pict = '$path',";
   } 
   /** Формируем и выполняем SQL-запрос на обновление новостной позиции */
@@ -98,9 +59,9 @@
                             body='".$_POST['body']."',
                             putdate = '".$_POST['date_year']."-".$_POST['date_month']."-".$_POST['date_day']." ".sprintf("%02d",$_POST['date_hour']).":".sprintf("%02d",$_POST['date_minute']).":00',
                             $path_image
+                            preview ='".$_POST['preview']."', 
                             hide = '$showhide'
             WHERE id_news=".$_POST['id_news'];
-  if(query($query)) header("Location: index.php?page=".$_GET['page']);
-  else links("Ошибка при редактировании новостей (база данных)");
+  if(query($query)) header("Location: ".constant("Main_url")."index.php");
 
 ?>
