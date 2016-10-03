@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/style.css"  type='text/css'>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
+    <script type="text/javascript" src="js/news.js"></script>
 
     
 </head>

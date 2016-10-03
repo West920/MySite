@@ -63,7 +63,7 @@ $data = R::find('comments', 'id_news=:id_news', array(':id_news'=>$_GET['id_news
         ?>
 
           <div class="adminpanel-comm">
-            <form name=formadmin method=post action="admin/admin_all.php">
+            <form class="delcomm">
               <input type="hidden" name="id_comm" value=<? echo $com->id; ?>>
               <input type="hidden" name="id_news" value=<? echo $_GET['id_news']; ?>>
               <button class="btn btn-danger" name='delete_comm'>x</button>
@@ -108,7 +108,7 @@ $data = R::load('users', $_COOKIE['id']);
       </div>
           
         <div class="col-md-9">
-            <form name=form  method=post role="form" action="pages/addcomm.php">
+            <form id="addcomm"role="form">
             <input type="hidden" name="id_news" value=<?echo $_GET['id_news']; ?>>
               <div class="form-group row">
                 <label for="textcomm">Содержание комментария</label>
