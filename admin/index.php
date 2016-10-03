@@ -1,125 +1,331 @@
 <?/** Устанавливаем соединение с базой данных */
-require_once("../config.php");
-/** Проверка пользователя на администратора */
-if(isAdmin() == 0) links('Недоступный раздел');
+    require_once("../config.php");
+    /** Проверка пользователя на администратора */
+    if(isAdmin() == 0) links('Недоступный раздел');
 ?>
+<!doctype html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Администрирование новостей</title>
-    <link rel='stylesheet' href='/css/bootstrap.min.css' type='text/css' media='all'>
+    <meta charset="utf-8"/>
+    <title>Администрирование сайта</title>
+    
+    <link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/admin.css" type="text/css"/>
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" />
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="js/jquery-1.5.2.min.js" type="text/javascript"></script>
+    <script src="js/hideshow.js" type="text/javascript"></script>
+    <script src="js/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/jquery.equalHeight.js"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function() 
+        { 
+          $(".tablesorter").tablesorter(); 
+     } 
+    );
+    $(document).ready(function() {
+
+    //When page loads...
+    $(".tab_content").hide(); //Hide all content
+    $("ul.tabs li:first").addClass("active").show(); //Activate first tab
+    $(".tab_content:first").show(); //Show first tab content
+
+    //On Click Event
+    $("ul.tabs li").click(function() {
+
+        $("ul.tabs li").removeClass("active"); //Remove any "active" class
+        $(this).addClass("active"); //Add "active" class to selected tab
+        $(".tab_content").hide(); //Hide all tab content
+
+        var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+        $(activeTab).fadeIn(); //Fade in the active ID content
+        return false;
+        });
+
+    });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('.column').equalHeight();
+        });
+    </script>
+
 </head>
+
+
 <body>
-<div class="wraper">
 
-    <div class="row"><div class="col-md-offset-2"><div class="h2">Администрирование новостей</div></div></div>
-
-    <div class="row">
-        <div class="col-md-2"><div class="panel panel-default">Сайд бар слева</div></div>
-        <div class="col-md-7">
-
-
+    <header id="header">
+        <hgroup>
+            <h1 class="site_title"><a href="index.html">Website by West920</a></h1>
+            <h2 class="section_title"><?echo constant("Main_url"); ?></h2><div class="btn_view_site"><a href=<?echo constant("Main_url"); ?>>Cайт</a></div>
+        </hgroup>
+    </header> <!-- end of header bar -->
+    
+    
+    <aside id="sidebar" class="column">
+        <form class="quick_search">
+            <input type="text" value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
+        </form>
+        <hr/>
+        <h3>Content</h3>
+        <ul class="toggle">
+            <li class="icn_new_article"><a href="#">New Article</a></li>
+            <li class="icn_edit_article"><a href="#">Edit Articles</a></li>
+            <li class="icn_categories"><a href="#">Categories</a></li>
+            <li class="icn_tags"><a href="#">Tags</a></li>
+        </ul>
+        <h3>Users</h3>
+        <ul class="toggle">
+            <li class="icn_add_user"><a href="#">Add New User</a></li>
+            <li class="icn_view_users"><a href="#">View Users</a></li>
+            <li class="icn_profile"><a href="#">Your Profile</a></li>
+        </ul>
+        <h3>Media</h3>
+        <ul class="toggle">
+            <li class="icn_folder"><a href="#">File Manager</a></li>
+            <li class="icn_photo"><a href="#">Gallery</a></li>
+            <li class="icn_audio"><a href="#">Audio</a></li>
+            <li class="icn_video"><a href="#">Video</a></li>
+        </ul>
+        <h3>Admin</h3>
+        <ul class="toggle">
+            <li class="icn_settings"><a href="#">Options</a></li>
+            <li class="icn_security"><a href="#">Security</a></li>
+            <li class="icn_jump_back"><a href="#">Logout</a></li>
+        </ul>
         
+        <footer>
+            <hr />
+            <p><strong>Copyright &copy; 2011 Website Admin</strong></p>
+        </footer>
+    </aside><!-- end of sidebar -->
+    
+    <section id="main" class="column">
+        
+        <h4 class="alert_info">Welcome to the free MediaLoot admin panel template, this could be an informative message.</h4>
+        
+        <article class="module width_full">
+            <header><h3>Stats</h3></header>
+            <div class="module_content">
+                   
 
+                <? include 'table_news.php'; ?>
+     
+            </div>
+        </article><!-- end of stats article -->
 
-            <?
-            /** Выводим ошибки */
-            if (!empty($err)) echo "<div class='panel panel-danger'><div class='panel-heading'>".$err."</div></div>";
-            if (!empty($scs)) echo "<div class='panel panel-success'><div class='panel-heading'>".$scs."</div></div>";
+        <article class="module width_3_quarter">
+        <header><h3 class="tabs_involved">Content Manager</h3>
+        <ul class="tabs">
+            <li><a href="#tab1">Posts</a></li>
+            <li><a href="#tab2">Comments</a></li>
+        </ul>
+        </header>
 
-            /** Проверяем параметр page, предотвращая SQL-инъекцию */
-            if(!preg_match("|^[\d]*$|",$_POST['page'])) links("Ошибка при обращении к блоку новостей");
-            /** Проверяем переменную $page, равную порядковому номеру первой новости на странице */
-            $page = $_GET['page'];
-            if(empty($page)) $page = 1;
-            $begin = ($page - 1)*$all_number_news;
-
-            /** Воспроизводим новости, таким образом, как они выглядят на
-             * главной странице, но отображаем так же невидимые новости */
-            $query = "SELECT id_news,
-                   name,
-                   body,
-                   DATE_FORMAT(putdate,'%d.%m.%Y') as putdate_format,
-                   url_pict,
-                   hide
-            FROM news
-            ORDER BY putdate DESC
-            LIMIT $begin, $all_number_news";
-            $new = all($query);
-
-            if ($new)
-            {
-            /** Выводим ссылки управления новостями, добавление, удаление и редактирование */
-            ?>
-
-            <div class="form-group"><button class="btn btn-success" size=70 type=submit name="enter"><a href=addnewsform.php?start=$start' >Добавить новость</a></button></div>
-            <div class="form-group"><button class="btn btn-success" size=70 type=submit name="enter"><a href="/">На главную</a></button></div>
-
-            <table class="table table-condensed table-striped table-bordered table-hover">
-                <tr class=tableheadercat align="center">
-                    <td width=120><p class=zagtable>Дата</p></td>
-                    <td width=60%><p class=zagtable>Новость</p></td>
-                    <td width=40><p class=zagtable><nobr>Избр-е</nobr></p></td>
-                    <td colspan=3><p class=zagtable>Действия</p></td>
+        <div class="tab_container">
+            <div id="tab1" class="tab_content">
+            <table class="tablesorter" cellspacing="0"> 
+            <thead> 
+                <tr> 
+                    <th></th> 
+                    <th>Entry Name</th> 
+                    <th>Category</th> 
+                    <th>Created On</th> 
+                    <th>Actions</th> 
+                </tr> 
+            </thead> 
+            <tbody> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Lorem Ipsum Dolor Sit Amet</td> 
+                    <td>Articles</td> 
+                    <td>5th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Ipsum Lorem Dolor Sit Amet</td> 
+                    <td>Freebies</td> 
+                    <td>6th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
                 </tr>
-                <?php
-                foreach($new as $news)
-                {
-                    /** Если новость отмечена как невидимая (hide='hide'), выводим
-                     * ссылку "отобразить", если как видимия (hide='show') - "скрыть" */
-                    $colorrow = "";
-                    if($news['hide']=='show') $showhide = "<p><a href=hide.php?id_news=".$news['id_news']."&start=$start title='Скрыть новость в блоке новостей'>Скрыть</a>";
-                    else  {
-                        $showhide = "<p><a href=show.php?id_news=".$news['id_news']."&start=$start title='Отобразить новость в блоке новостей'>Отобразить</a>";
-                        $colorrow = "class='hiddenrow'";
-                    }
-                    /** Проверяем наличие изображения */
-                    if ($news['url_pict'] != '' && $news['url_pict'] != '-') $url_pict="<b><a href=../".$news['url_pict'].">есть</a></b>";
-                    else $url_pict="нет";
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Sit Amet Dolor Ipsum</td> 
+                    <td>Tutorials</td> 
+                    <td>10th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Dolor Lorem Amet</td> 
+                    <td>Articles</td> 
+                    <td>16th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr>
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Dolor Lorem Amet</td> 
+                    <td>Articles</td> 
+                    <td>16th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr>  
+            </tbody> 
+            </table>
+            </div><!-- end of #tab1 -->
+            
+            <div id="tab2" class="tab_content">
+            <table class="tablesorter" cellspacing="0"> 
+            <thead> 
+                <tr> 
+                    <th></th> 
+                    <th>Comment</th> 
+                    <th>Posted by</th> 
+                    <th>Posted On</th> 
+                    <th>Actions</th> 
+                </tr> 
+            </thead> 
+            <tbody> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Lorem Ipsum Dolor Sit Amet</td> 
+                    <td>Mark Corrigan</td> 
+                    <td>5th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Ipsum Lorem Dolor Sit Amet</td> 
+                    <td>Jeremy Usbourne</td> 
+                    <td>6th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr>
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Sit Amet Dolor Ipsum</td> 
+                    <td>Super Hans</td> 
+                    <td>10th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Dolor Lorem Amet</td> 
+                    <td>Alan Johnson</td> 
+                    <td>16th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr> 
+                <tr> 
+                    <td><input type="checkbox"></td> 
+                    <td>Dolor Lorem Amet</td> 
+                    <td>Dobby</td> 
+                    <td>16th April 2011</td> 
+                    <td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td> 
+                </tr> 
+            </tbody> 
+            </table>
 
-                    if (($news['url']!='-') and ($news['url']!='')) $news_url="<br><b>Ссылка:</b> <a href='".$news['url']."'>".$news['url_text']."</a>";
-                    else $news_url="";
-                    /** Выводим новость */
-                    echo "<tr $colorrow >
-              <td><p class=help align=center>".$news['putdate_format']."</p></td>
-              <td><p><a title='Редактировать текст новости' href=editnewsform.php?id_news=".$news['id_news']."&start=$start>".$news['name']."</a><br>".nl2br($news['body'])." ". $news_url." </td>
-              <td><p>".$url_pict."</p></td>
-              <td align=center>".$showhide."</td>
-              <td align=center><p><a href=delnews.php?start=$start&id_news=".$news['id_news']." title='Удалить новость'>Удалить</a></td>
-              <td align=center><p><a href=editnewsform.php?start=$start&id_news=".$news['id_news']." title='Редактировать текст новости'>Исправить</a></td>
-            </tr>";
-                }
-                echo "</table>";
-                }
-                else $err = "Ошибка при обращении к блоку новостей";
+            </div><!-- end of #tab2 -->
+            
+        </div><!-- end of .tab_container -->
+        
+        </article><!-- end of content manager article -->
+        
+        <article class="module width_quarter">
+            <header><h3>Messages</h3></header>
+            <div class="message_list">
+                <div class="module_content">
+                    <div class="message"><p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor.</p>
+                    <p><strong>John Doe</strong></p></div>
+                    <div class="message"><p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor.</p>
+                    <p><strong>John Doe</strong></p></div>
+                    <div class="message"><p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor.</p>
+                    <p><strong>John Doe</strong></p></div>
+                    <div class="message"><p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor.</p>
+                    <p><strong>John Doe</strong></p></div>
+                    <div class="message"><p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor.</p>
+                    <p><strong>John Doe</strong></p></div>
+                </div>
+            </div>
+            <footer>
+                <form class="post_message">
+                    <input type="text" value="Message" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
+                    <input type="submit" class="btn_post_message" value=""/>
+                </form>
+            </footer>
+        </article><!-- end of messages article -->
+        
+        <div class="clear"></div>
+        
+        <article class="module width_full">
+            <header><h3>Post New Article</h3></header>
+                <div class="module_content">
+                        <fieldset>
+                            <label>Post Title</label>
+                            <input type="text">
+                        </fieldset>
+                        <fieldset>
+                            <label>Content</label>
+                            <textarea rows="12"></textarea>
+                        </fieldset>
+                        <fieldset style="width:48%; float:left; margin-right: 3%;"> <!-- to make two field float next to one another, adjust values accordingly -->
+                            <label>Category</label>
+                            <select style="width:92%;">
+                                <option>Articles</option>
+                                <option>Tutorials</option>
+                                <option>Freebies</option>
+                            </select>
+                        </fieldset>
+                        <fieldset style="width:48%; float:left;"> <!-- to make two field float next to one another, adjust values accordingly -->
+                            <label>Tags</label>
+                            <input type="text" style="width:92%;">
+                        </fieldset><div class="clear"></div>
+                </div>
+            <footer>
+                <div class="submit_link">
+                    <select>
+                        <option>Draft</option>
+                        <option>Published</option>
+                    </select>
+                    <input type="submit" value="Publish" class="alt_btn">
+                    <input type="submit" value="Reset">
+                </div>
+            </footer>
+        </article><!-- end of post new article -->
+        
+        <h4 class="alert_warning">A Warning Alert</h4>
+        
+        <h4 class="alert_error">An Error Message</h4>
+        
+        <h4 class="alert_success">A Success Message</h4>
+        
+        <article class="module width_full">
+            <header><h3>Basic Styles</h3></header>
+                <div class="module_content">
+                    <h1>Header 1</h1>
+                    <h2>Header 2</h2>
+                    <h3>Header 3</h3>
+                    <h4>Header 4</h4>
+                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
 
-/** Постраничная навигация */
+<p>Donec id elit non mi porta <a href="#">link text</a> gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Cras mattis consectetur purus sit amet fermentum. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
 
-$query = "SELECT COUNT(*) as count FROM news WHERE hide='show' AND putdate <= NOW()";
-/** Получаем общее кол-во новостей */
-$total = one($query);
-$total = $total['count'];
-/** Определяем кол-во страниц */
-if($total%$all_number_news>0) $total = (int)($total/$all_number_news)+1;
-else $total = (int)($total/$all_number_news);
-
-if ($page != 1) $pervpage = '<li><a href='.$_SERVER[PHP_SELF].'?page=1>&laquo;</a></li>';
-/** Проверяем нужны ли стрелки вперед */
-if ($page != $total) $nextpage = '<li><a href='.$_SERVER[PHP_SELF].'?page=' .$total. '>&raquo;</a></li>';
-/** Находим ближайшие станицы с обоих краев, если они есть */
-for($i=3; $i>=1; $i--)
-{
-    if($page - $i > 0) $pageleft .= '<li><a href='.$_SERVER[PHP_SELF].'?page='. ($page - $i) .'>'. ($page - $i) .'</a></li>';
-}
-for($i=1; $i<=3; $i++)
-{
-    if($page + $i <= $total) $pageright .= '<li><a href='.$_SERVER[PHP_SELF].'?page='. ($page + $i) .'>'. ($page + $i) .'</a></li>';
-}
-
-/** Вывод меню */
-echo '<ul class="pagination">'.$pervpage.$pageleft.'<li><a href="#"><b>'.$page.'</b></a></li>'.$pageright.$nextpage;
+                    <ul>
+                        <li>Donec ullamcorper nulla non metus auctor fringilla. </li>
+                        <li>Cras mattis consectetur purus sit amet fermentum.</li>
+                        <li>Donec ullamcorper nulla non metus auctor fringilla. </li>
+                        <li>Cras mattis consectetur purus sit amet fermentum.</li>
+                    </ul>
+                </div>
+        </article><!-- end of styles article -->
+        <div class="spacer"></div>
+    </section>
 
 
-include "../forms/footer.php";
-?>
+</body>
 
+</html>

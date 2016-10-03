@@ -3,7 +3,7 @@ require_once("config.php");
 include "forms/header.php";
 ?>
 
-<button class="btn btn-success"><a href="/">На главную</a></button>
+<a class="btn btn-success" href="/">На главную</a>
 
 <?php
 /** Защита от инъекционных запросов */
