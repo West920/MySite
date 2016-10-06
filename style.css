@@ -148,3 +148,11 @@ figure img {
 .slider .nav span.on {
   background: #2e9419;
 }
+.fixed {
+  position: fixed;
+  margin-right: 8.7%;
+  top: 10px;
+  /*здесь указываем отступ сверху*/
+  z-index: 9999;
+  /*устанавливаем блок поверх всех элементов на странице*/
+}

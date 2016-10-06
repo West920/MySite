@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
 
-
+            <div class="carousel">
                     <div class="slider">
                         <ul>
                             <li><img class="img-responsive" src="http://umor-midle1.esy.es/wp-content/themes/artdevil/images/slides/1.jpg" alt=""></li>
@@ -55,6 +55,8 @@
                             <li><img class="img-responsive" src="http://cs5.pikabu.ru/images/big_size_comm/2015-11_4/144776261713148841.jpg" alt=""></li>
                         </ul>
                     </div>
+                </div>
+
 
 
 

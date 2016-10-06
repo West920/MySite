@@ -60,5 +60,15 @@ $(document).ready(function(){
    ///////////////////////////
 	//Slider and
 	//////////////////////////
+
+	///Scrolling right sidebar//////////////////////////////
+var topPos = $('.border.side-left').offset().top; //topPos - это значение от верха блока до окна браузера
+ $(window).scroll(function() { 
+  var top = $(document).scrollTop()+10;
+  if (top > topPos) $('.border.side-left').addClass('fixed'); 
+  else $('.border.side-left').removeClass('fixed');
+ });
+	
 	
 });
+
