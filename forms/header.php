@@ -15,7 +15,7 @@
 <body>
     <div class=" col-md-10 col-md-offset-1">
         <div class="row">
-            <nav role="navigation" class="navbar navbar-default">
+            <nav role="navigation" class="navbar navbar-inverse">
                 <div class="container-fluid">
 
                     <div class="navbar-header">
@@ -43,6 +43,25 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+
+                    <div class="slider">
+                        <ul>
+                            <li><img class="img-responsive" src="http://umor-midle1.esy.es/wp-content/themes/artdevil/images/slides/1.jpg" alt=""></li>
+                            <li><img class="img-responsive" src="https://image.jimcdn.com/app/cms/image/transf/dimension=1920x400:format=jpg/path/s32007c35ebd7c299/image/ib585422e62df23f3/version/1438334272/image.jpg" alt=""></li>
+                            <li><img class="img-responsive" src="http://s.om1.ru/localStorage/news/40/02/de/0c/4002de0c_resizedScaled_1000to400.jpg" alt=""></li>
+                            <li><img class="img-responsive" src="http://galaxy-science.ru/media/k2/items/cache/thumbs/d26f2d3a8ff5583681ac68eec63fdc44_XL_1000x400.jpg" alt=""></li>
+                            <li><img class="img-responsive" src="http://cs5.pikabu.ru/images/big_size_comm/2015-11_4/144776261713148841.jpg" alt=""></li>
+                        </ul>
+                    </div>
+
+
+
+
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-10 col-md-offset-1"><div class="pinfo">
                 <?
                 $cook = CheckCook();
@@ -51,8 +70,7 @@
             </div></div>
         </div>
         <div class="row">
-            <div class="col-md-2 col-md-offset-1"><div class="border side-left">Сайд бар слева</div></div>
-            <div class="col-md-6">
+            <div class="col-md-8 col-md-offset-1">
                 <div class="border">
 
                 <?

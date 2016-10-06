@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 if (function_exists('date_default_timezone_set')) date_default_timezone_set('Europe/Kaliningrad');;
 
@@ -134,8 +134,8 @@ if (function_exists('date_default_timezone_set')) date_default_timezone_set('Eur
   <td></td>
   <td><input class=button type=submit value=<?php echo htmlspecialchars($button); ?>></td>
 </tr>
-<input type=hidden name=id_news value=<?php echo htmlspecialchars($_POST['id_news']); ?>>
-<input type=hidden name=start value=<?php echo htmlspecialchars($_GET['start']); ?>>
+<input type=text name='id_news' value=<?php echo htmlspecialchars($_GET['id_news']); ?>>
+<input type=text name='start' value=<?php echo htmlspecialchars($_GET['start']); ?>>
 </table>
 </form>
 

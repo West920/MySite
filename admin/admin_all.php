@@ -50,7 +50,7 @@
         $date_year = substr($row['putdate'],0,4);
         $date_hour = substr($row['putdate'],11,2);
         $date_minute = substr($row['putdate'],14,2);
-        $_POST['id_news'] = $row['id_news'];
+        $_GET['id_news'] = $row['id_news'];
         /** Определяем скрыто поле или нет */
         if($row['hide'] == 'show') $showhide = "checked";
         else $showhide = "";

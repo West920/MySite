@@ -37,7 +37,7 @@ include "forms/header.php";
 
           <?if(isAdmin() == 1) { ?>
           <div class="adminpanel">
-            <form name=formadmin method=post action="admin/admin_all.php">
+            <form name=formadmin method=POST action="admin/admin_all.php">
               <input type="hidden" name="id_news" value=<? echo $_GET['id_news']; ?>>
               <button class="btn btn-success" name='edit'>Изменить запись</button>
               <button class="btn btn-danger" name='delete'>Удалить запись</button>

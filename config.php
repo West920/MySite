@@ -4,8 +4,7 @@ define("Main_url", 'http://kurs/');
 include 'libs/rb.php';
 require_once 'libs/class.upload.php';
 
-R::setup( 'mysql:host=localhost;dbname=worksolution', 'root', '' ); 
-R::freeze( false );
+
 
   if (function_exists('date_default_timezone_set')) date_default_timezone_set('Europe/Kaliningrad');
 
@@ -22,6 +21,8 @@ R::freeze( false );
   $err ='';
   $scs = '';
 
+R::setup( 'mysql:host='.$dblocation.';dbname='.$dbname, $dbuser, $dbpasswd ); 
+R::freeze( false );
 /** Для подключения к БД используем PDO
  *  @return array[] $db одиночный результат запроса
  */

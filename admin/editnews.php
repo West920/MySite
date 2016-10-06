@@ -28,7 +28,8 @@
   if($_POST['chk_delete'] == "on" || $_POST['chk_filename'] == "on")
   {
     /** Delete old image*/
-    $news = R::findOne('news', 'id_news = ?', [$_POST['id_news']]);
+    echo $_POST['id_news'];
+    $news = R::findOne('news', 'id_news = ?', $_POST['id_news']);
     @unlink($news->url_pict);
     $path_image = "url_pict = '',";
   }
@@ -62,6 +63,6 @@
                             preview ='".$_POST['preview']."', 
                             hide = '$showhide'
             WHERE id_news=".$_POST['id_news'];
-  if(query($query)) header("Location: ".constant("Main_url")."index.php");
+  if(query($query)) header("Location: ".constant("Main_url")."news.php?id_news=".$_POST['id_news']);
 
 ?>
